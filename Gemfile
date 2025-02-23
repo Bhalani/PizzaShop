@@ -61,5 +61,5 @@ group :test do
   gem "selenium-webdriver"
   gem "database_cleaner-active_record"
   gem "rails-controller-testing"
-  gem "shoulda-matchers", "~> 4.0"
+  gem "shoulda-matchers", "~> 6.4"
 end
