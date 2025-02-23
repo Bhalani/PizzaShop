@@ -1,0 +1,48 @@
+<div class="flex mb-4">
+  <%= link_to '< Home page', vendors_home_path, class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' %>
+</div>
+
+<div class="mt-4">
+  <%= form_with(model: [:vendors, inventory], data: { turbo: false }) do |form| %>
+  <% if inventory.errors.any? %>
+    <div id="error_explanation">
+    <h2><%= pluralize(inventory.errors.count, "error") %> prohibited this inventory from being saved:</h2>
+
+    <ul>
+      <% inventory.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+    </div>
+  <% end %>
+
+  <div class="field mb-4">
+    <%= form.label :name, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :name, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+  </div>
+
+  <div class="field mb-4">
+    <%= form.label :category, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.select :category, [['None', nil]] + Inventory.categories.keys.map { |key| [key.humanize, key] }, {}, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+  </div>
+
+  <div class="field mb-4">
+    <%= form.label :item_type, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.select :item_type, Inventory.item_types.keys.map { |key| [key.humanize, key] }, {}, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+  </div>
+
+  <div class="field mb-4">
+    <%= form.label :price_per_piece, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.number_field :price_per_piece, step: 0.01, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+  </div>
+
+  <div class="field mb-4">
+    <%= form.label :quantity, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.number_field :quantity, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+  </div>
+
+  <div class="flex items-center justify-between mt-4">
+    <%= form.submit "Save Inventory", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
+  <% end %>
+</div>

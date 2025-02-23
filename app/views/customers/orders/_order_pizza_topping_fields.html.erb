@@ -1,0 +1,11 @@
+<div class="nested-fields mb-4" data-new-record="<%= f.object.new_record? %>">
+  <div class="field mb-4">
+    <%= f.label :inventory_id, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= f.collection_select :inventory_id, @toppings, :id, :name, {}, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+    <%= f.label :quantity, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= f.number_field :quantity, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+    <%= f.hidden_field :_destroy %>
+  </div>
+
+  <%= button_tag 'Remove Topping', type: 'button', data: { action: 'nested-form#remove' }, class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' %>
+</div>

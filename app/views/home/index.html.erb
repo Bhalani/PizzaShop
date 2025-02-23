@@ -1,0 +1,9 @@
+<div class="flex items-center justify-center bg-gray-100 py-24">
+  <div class="text-center">
+    <h1 class="text-4xl font-bold text-black mb-8">Welcome to PizzaApp</h1>
+    <div class="flex space-x-4">
+      <%= button_to 'Login as Vendor', login_path(role: 'vendor'), method: :post, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+      <%= button_to 'Login as Customer', login_path(role: 'customer'), method: :post, class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' %>
+    </div>
+  </div>
+</div>

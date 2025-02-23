@@ -1,0 +1,86 @@
+<div class="flex mb-4">
+  <%= link_to '< Home page', customers_home_path, class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded' %>
+</div>
+
+<h1 class="text-3xl font-bold text-black mb-4">New Order</h1>
+
+<%= form_with(model: [:customers, @order], local: true, data: { turbo: false }) do |form| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field mb-4">
+    <%= form.label :customer_id, class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.collection_select :customer_id, @customers, :id, :name, {}, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+  </div>
+
+  <div class="relative">
+    <div id="pizzas">
+      <%= form.fields_for :order_pizzas do |pizza_form| %>
+        <div class="nested-fields mb-4 flex justify-between">
+          <div>
+            <h4 class="text-2xl font-bold text-black mb-4">Pizzas</h4>
+            <div class="field mb-4">
+              <%= pizza_form.label :pizza_id, class: "block text-gray-700 text-sm font-bold mb-2" %>
+              <%= pizza_form.collection_select :pizza_id, @pizzas, :id, :name, {}, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+              <%= pizza_form.label :crust, class: "block text-gray-700 text-sm font-bold mb-2" %>
+              <%= pizza_form.select :crust, @crusts.map { |crust| [crust.name, crust.name] }, {}, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+              <%= pizza_form.label :size, class: "block text-gray-700 text-sm font-bold mb-2" %>
+              <%= pizza_form.select :size, PizzaSize.sizes.keys.map { |key| [key.humanize, key] }, {}, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+              <%= pizza_form.label :quantity, class: "block text-gray-700 text-sm font-bold mb-2" %>
+              <%= pizza_form.number_field :quantity, class: "shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-40 md:w-60" %>
+            </div>
+          </div>
+
+          <div class="relative" data-controller="nested-form">
+            <h4 class="text-xl font-bold text-black mb-4">Toppings</h4>
+
+            <template data-nested-form-target="template">
+              <%= pizza_form.fields_for :order_pizza_toppings, OrderPizzaTopping.new, child_index: "TEMPLATE_RECORD_INDEX" do |f| %>
+                <%= render 'order_pizza_topping_fields', f: f %>
+              <% end %>
+            </template>
+
+            <div data-nested-form-target="target">
+              <%= pizza_form.fields_for :order_pizza_toppings do |topping_form| %>
+                <%= render 'order_pizza_topping_fields', f: topping_form %>
+              <% end %>
+            </div>
+
+            <button type="button" data-action="nested-form#add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add Topping</button>
+          </div>
+
+          <div class="relative" data-controller="nested-form">
+            <h4 class="text-2xl font-bold text-black mb-4">Sides</h4>
+
+            <template data-nested-form-target="template">
+              <%= form.fields_for :order_sides, OrderSide.new, child_index: "TEMPLATE_RECORD_INDEX" do |side_form| %>
+                <%= render 'order_side_fields', side_form: side_form %>
+              <% end %>
+            </template>
+
+            <div data-nested-form-target="target">
+              <%= form.fields_for :order_sides do |side_form| %>
+                <%= render 'order_side_fields', side_form: side_form %>
+              <% end %>
+            </div>
+
+            <button type="button" data-action="nested-form#add" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Add Side</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between mt-4">
+    <%= form.submit "Add Pizza", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
+<% end %>
