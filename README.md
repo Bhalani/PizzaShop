@@ -5,36 +5,36 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
-3.3.6
+#### Ruby version
+  - 3.3.6
 
-* System dependencies
-- ruby
-- gem
-- bundler
-- postgresql
-- tailwind css
-- stimulus js
-- node.js
-- yarn
+#### System dependencies
+  - ruby
+  - gem
+  - bundler
+  - postgresql
+  - tailwind css
+  - stimulus js
+  - node.js
+  - yarn
 
-* Configuration
-- `bundle install`
-- `yarn install`
+#### Configuration
+  - `bundle install`
+  - `yarn install`
 
-* Database creation
-- `rails db:create`
-- `rails db:migrate`
+#### Database creation
+  - `rails db:create`
+  - `rails db:migrate`
 
-* Database initialization
-- `rails db:seed`
+#### Database initialization
+  - `rails db:seed`
 
-* How to run the test suite
-- `rspec`
+#### How to run the test suite
+  - `rspec`
 
-* How to run the app server and try in browser
-- `bin/dev`
+#### How to run the app server and try in browser
+  - `bin/dev`
 
-* In case CSS is not loading properly
-- `rails assets:clobber`
-- `rails assets:precompile`
+#### In case CSS is not loading properly
+  - `rails assets:clobber`
+  - `rails assets:precompile`
